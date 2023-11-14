@@ -1,27 +1,47 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+
 jobs:
-  # Build job
   build:
-    # <Not provided for brevity>
-    # At a minimum this job should upload artifacts using actions/upload-pages-artifact
-
-  # Deploy job
-  deploy:
-    # Add a dependency to the build job
-    needs: build
-
-    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
-    permissions:
-      pages: write      # to deploy to Pages
-      id-token: write   # to verify the deployment originates from an appropriate source
-
-    # Deploy to the github-pages environment
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    # Specify runner + deployment step
     runs-on: ubuntu-latest
+
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2 # or the latest "vX.X.X" version tag for this action
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        persist-credentials: true
+        clean: true
+
+    - name: Use Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8.x
+
+    - name: Update pip
+      run: |
+        python -m pip install --upgrade pip
+        git config --global user.email "devops-bot@vodafone.com"
+        git config --global user.name "devops-bot"
+        git config --global http.postBuffer 1048576000
+        git config --global https.postBuffer 1048576000
+
+    - name: Install mkdocs
+      run: |
+        pip install -r requirements.txt
+
+    - name: Deploy TAG
+      run: |
+        mike deploy --push ${{ github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/') }}
+
+    - name: Deploy latest as current
+      run: |
+        mike set-default latest
+        git pull
+        mike deploy --push --update-aliases current latest
+      if: github.event_name == 'push'
