@@ -1,4 +1,9 @@
 jobs:
+
+on:
+  push:
+    branches:
+      - test
   # Build job
   build:
     # <Not provided for brevity>
