@@ -46,7 +46,7 @@ jobs:
 
     - name: Deploy latest as current
       run: |
-        mike set-default latest
+        mike set-default --push latest
         git pull
         mike deploy --push --update-aliases current latest
     
