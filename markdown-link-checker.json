@@ -1,0 +1,15 @@
+{
+  "ignorePatterns": [
+        {"pattern": "^https://jenkins.devops.digital.vodafone.it"},
+        {"pattern": "^https://oneitsm-dwp.onbmc.com"},
+        {"pattern": "^https://collaborate.vodafone.com"},
+        {"pattern": "^https://tps2.vodafone.com"},
+        {"pattern": "^https://dev.azure.com"},
+        {"pattern": "^https://confluence.sp.vodafone.com"},
+        {"pattern": "^https://openshift.dxl-pre.vodafone.com"},
+        {"pattern": "^https://www.gnu.org"}
+        
+  ],
+  "timeout": "5s",
+  "aliveStatusCodes": [200, 203, 206]
+}
