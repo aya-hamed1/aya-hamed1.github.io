@@ -40,9 +40,6 @@ jobs:
       run: |
         git pull
         mike deploy latest
-    - name: Debug Info
-      run: |
-        mike list
 
     - name: Deploy latest as current
       run: |
