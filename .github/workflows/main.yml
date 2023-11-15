@@ -38,6 +38,7 @@ jobs:
 
     - name: Deploy TAG
       run: |
+        git pull
         mike deploy --push ${{ github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/') }}
 
     - name: Deploy latest as current
@@ -47,4 +48,4 @@ jobs:
         mike deploy --push --update-aliases current latest
       if: github.event_name == 'push'
     
-    - run: mkdocs gh-deploy --force
+#    - run: mkdocs gh-deploy --force
