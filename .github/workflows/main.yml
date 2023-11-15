@@ -39,16 +39,14 @@ jobs:
     - name: Deploy TAG
       run: |
         git pull
-        mike deploy -b main 1.0
+        mike deploy latest
     - name: Debug Info
       run: |
-        which mike
-        mike --version
         mike list
 
     - name: Deploy latest as current
       run: |
-        mike set-default 1.0
+        mike set-default --push latest
         git pull
         mike deploy --push --update-aliases current latest
     
