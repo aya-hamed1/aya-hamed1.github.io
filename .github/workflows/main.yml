@@ -40,6 +40,9 @@ jobs:
       run: |
         git pull
         mike deploy --push ${{ github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/') }}
+    - name: Debug Info
+      run: |
+        mike list
 
     - name: Deploy latest as current
       run: |
