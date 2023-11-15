@@ -42,6 +42,8 @@ jobs:
         mike deploy --push ${{ github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/') }}
     - name: Debug Info
       run: |
+        which mike
+        mike --version
         mike list
 
     - name: Deploy latest as current
